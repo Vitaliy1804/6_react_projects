@@ -1,60 +1,54 @@
 import React from 'react';
+import { Block } from './Block';
 import './index.scss';
-import { Success } from './components/Success';
-import { Users } from './components/Users';
-
-// Тут список пользователей: https://reqres.in/api/users
 
 function App() {
-const [users, setUsers] = React.useState([]);
-const [invites, setInvites] = React.useState([]);
-const [isLoading, setLoading] = React.useState(true);
-const [success, setSuccess] = React.useState(false);
-const [searchValue, setSearchValue] =React.useState('');
+  const [currencyOne, setCurrencyOne] = React.useState('UAH')
+  const [currencyTwo, setCurrencyTwo] = React.useState('USD')
+  const [fromPrice, setFromPrice] = React.useState(0)
+  const [toPrice, setToPrice] = React.useState(0)
 
-React.useEffect(() => {
-  fetch('https://reqres.in/api/users')
-  .then(res=> res.json())
-  .then(json => {
-    setUsers(json.data)
-  }).catch(err => {
-    console.warn(err)
-    alert('Getting users error')
-  }).finally(() => setLoading(false))
-}, [])
+  const [rates, setRates] = React.useState({})
 
-const onChangeSearchValue = (event) => {
-  setSearchValue(event.target.value)
-}
+  React.useEffect(()=> {
+fetch('https://cdn.cur.su/api/latest.json')
+.then(res => res.json())
+.then((json) => {
+  setRates(json.rates);
+  console.log(json.rates);
+}).catch(err => {
+  console.log(err)
+  alert('Fail to get data')
+})
+  }, [])
 
-const onClickInvite = (id) => {
-  if (invites.includes(id)) {
-    setInvites(prev => prev.filter(_id => _id !== id))
-    console.log(invites)
-  } else {
-    setInvites((prev) => [...prev, id])
+  const onChangeFromPrice = (value) => {
+    const price = value / rates[currencyOne];
+    const result = price * rates[currencyTwo];
+    setToPrice(result)
+    setFromPrice(value)
   }
-}
 
-const onClickSendInvites = () => {
-  setSuccess(true)
-}
+  const onChangeToPrice = (value) => {
+    setToPrice(value)
+  }
+
   return (
     <div className="App">
-      {success ? (
-        <Success count={invites.length} />
-      ) : (<Users 
-        onChangeSearchValue={onChangeSearchValue}
-        searchValue={searchValue}
-        items={users} 
-        isLoading={isLoading} 
-        invites={invites}
-        onClickInvite={onClickInvite}
-        onClickSendInvites={onClickSendInvites}
-        />
-        )}
+      <Block 
+      value={fromPrice} 
+      currency={currencyOne} 
+      onChangeCurrency={setCurrencyOne} 
+      onChangeValue={onChangeFromPrice}
+      />
+      <Block 
+      value={toPrice} 
+      currency={currencyTwo} 
+      onChangeCurrency={setCurrencyTwo}
+      onChangeValue={onChangeToPrice}
+      />
       
-      </div>
+    </div>
   );
 }
 
