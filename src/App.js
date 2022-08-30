@@ -17,6 +17,7 @@ fetch('https://cdn.cur.su/api/latest.json')
 .then((json) => {
   // setRates(json.rates);
   ratesRef.current = json.rates;
+  console.log(ratesRef)
   onChangeToPrice(1);
 }).catch(err => {
   console.log(err)
