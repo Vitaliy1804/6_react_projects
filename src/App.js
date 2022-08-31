@@ -1,57 +1,54 @@
 import React from 'react';
-import { Block } from './Block';
+import { Collection } from './Collection';
 import './index.scss';
 
+
+
 function App() {
-  const [currencyOne, setCurrencyOne] = React.useState('UAH')
-  const [currencyTwo, setCurrencyTwo] = React.useState('USD')
-  const [fromPrice, setFromPrice] = React.useState(0)
-  const [toPrice, setToPrice] = React.useState(1)
 
-  // const [rates, setRates] = React.useState({})
-  const ratesRef = React.useRef({});
+  const [searchValue, setSearchValue] = React.useState('');
+  const [collections, setCollections] = React.useState([]);
 
-  React.useEffect(()=> {
-fetch('https://cdn.cur.su/api/latest.json')
-.then(res => res.json())
-.then((json) => {
-  // setRates(json.rates);
-  ratesRef.current = json.rates;
-  onChangeToPrice(1);
-}).catch(err => {
-  console.log(err)
-  alert('Fail to get data')
-})
+  React.useEffect(() => {
+    fetch('https://630fb1ba36e6a2a04ee00634.mockapi.io/fotos')
+    .then(res => res.json())
+    .then((json) => {
+      setCollections(json);
+    }) 
+    .catch((err) => {
+      console.warn(err);
+      alert('Error getting data')
+    })
   }, [])
-
-  const onChangeFromPrice = (value) => {
-    const price = value / ratesRef.current[currencyOne];
-    const result = price * ratesRef.current[currencyTwo];
-    setToPrice(result.toFixed(2))
-    setFromPrice(value)
-  }
-
-  const onChangeToPrice = (value) => {
-    const result = (ratesRef.current[currencyOne] / ratesRef.current[currencyTwo]) * value;
-    setFromPrice(result.toFixed(2))
-    setToPrice(value)
-  }
-
   return (
     <div className="App">
-      <Block 
-      value={fromPrice} 
-      currency={currencyOne} 
-      onChangeCurrency={setCurrencyOne} 
-      onChangeValue={onChangeFromPrice}
-      />
-      <Block 
-      value={toPrice} 
-      currency={currencyTwo} 
-      onChangeCurrency={setCurrencyTwo}
-      onChangeValue={onChangeToPrice}
-      />
-      
+      <h1>Моя коллекция фотографий</h1>
+      <div className="top">
+        <ul className="tags">
+          <li className="active">Все</li>
+          <li>Горы</li>
+          <li>Море</li>
+          <li>Архитектура</li>
+          <li>Города</li>
+        </ul>
+        <input 
+        value={searchValue}
+        onChange={e => setSearchValue(e.target.value)}
+        className="search-input" 
+        placeholder="Поиск по названию" />
+      </div>
+      <div className="content">
+        {collections
+        .filter((obj) => obj.name.toLowerCase().includes(searchValue.toLocaleLowerCase()))
+        .map((obj, index) => (
+            <Collection  key={index} name={obj.name} images={obj.photos} />
+          ))}
+      </div>
+      <ul className="pagination">
+        <li>1</li>
+        <li className="active">2</li>
+        <li>3</li>
+      </ul>
     </div>
   );
 }
