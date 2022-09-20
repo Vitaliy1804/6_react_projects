@@ -1,11 +1,39 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 
 const AppContext = React.createContext();
 
+
+const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=a';
+const randomMeal = 'https://www.themealdb.com/api/json/v1/1/random.php';
+
 const AppProvider = ({children}) => {
+    const [meals, setMeals] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    const fetchMeals = async (url) => {
+        setLoading(true)
+        try {
+            const {data} = await axios(url)
+            setMeals(data.meals)
+            
+            
+    } catch (error) {
+            console.log(error.response)
+    }
+        setLoading(false)
+    }
+    
+
+    useEffect(() => {
+        fetchMeals(allMealsUrl)
+    }, [])
+
+    
+
     return (
-    <AppContext.Provider value={{name: 'John', age: '34', role: 'student'}}>
+    <AppContext.Provider value={{loading, meals}}>
         {children}
     </AppContext.Provider>
 )}
