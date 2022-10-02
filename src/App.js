@@ -10,8 +10,9 @@ function App () {
  return (
   <main>
     {/* <Favorites /> */}
+    <Search />
     <Meals />
-    {/* <Search /> */}
+    
     {/* <Modal /> */}
   </main>
  )

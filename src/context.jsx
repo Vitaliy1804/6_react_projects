@@ -5,19 +5,24 @@ import axios from 'axios';
 const AppContext = React.createContext();
 
 
-const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=a';
-const randomMeal = 'https://www.themealdb.com/api/json/v1/1/random.php';
+const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php';
 
 const AppProvider = ({children}) => {
     const [meals, setMeals] = useState([])
     const [loading, setLoading] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
 
     const fetchMeals = async (url) => {
         setLoading(true)
         try {
             const {data} = await axios(url)
-            setMeals(data.meals)
-            
+            if (data.meals) {
+                setMeals(data.meals)
+            }
+            else {
+                setMeals([])
+            }
             
     } catch (error) {
             console.log(error.response)
@@ -25,15 +30,18 @@ const AppProvider = ({children}) => {
         setLoading(false)
     }
     
+    const fetchRandomMeal = () => {
+        fetchMeals(randomMealUrl)
+    }
 
     useEffect(() => {
-        fetchMeals(allMealsUrl)
-    }, [])
+        fetchMeals(`${allMealsUrl}${searchTerm}`)
+    }, [searchTerm])
 
     
 
     return (
-    <AppContext.Provider value={{loading, meals}}>
+    <AppContext.Provider value={{loading, meals, setSearchTerm, fetchRandomMeal}}>
         {children}
     </AppContext.Provider>
 )}
