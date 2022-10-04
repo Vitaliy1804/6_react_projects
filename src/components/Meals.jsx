@@ -1,7 +1,7 @@
 import { useGlobalContext } from '../context';
 
 const Meals = () => {
-  const {loading, meals} =useGlobalContext()  
+  const {loading, meals, selectMeal} =useGlobalContext()  
 
   if (loading) {
     return  (
@@ -22,7 +22,12 @@ const Meals = () => {
         meals.map((singleMeal) => {
           const { idMeal, strMeal:title, strMealThumb:image } = singleMeal
           return <article key={idMeal} className='single-meal'>
-            <img src={image} className='img' style={{width: '250px'}} />
+            <img 
+            src={image} 
+            className='img' 
+            alt='img' 
+            onClick={() => selectMeal(idMeal)}
+            />
             <footer>
               <h5>{title}</h5>
               <button className='like-btn'>click me</button>

@@ -62,7 +62,12 @@ main {
   border: 1px solid grey;
   padding: 10px;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 90px 0;
+}
+
+.img {
+  width: 250px;
+  border-radius: 90px 0 0 0;
 }
 .section {
   margin-top: 200px;
@@ -164,26 +169,50 @@ main {
     border: 1px solid rgba(0, 0, 0, 0.4);
   }
 }
+footer h5 {
+  max-width: 250px;
+}
 
-.pagination {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-top: 40px;
+/*-----modal-----*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: grid;
+  place-items: center;
+  z-index: 5;
+}
+.modal-container {
+  width: 80vw;
+  max-width: 800px;
+  height: 80vh;
+  overflow: scroll;
+  transition: all;
+  background: #fff;
+  border-radius: 10px;
+}
 
-  li {
-    display: inline-block;
-    padding: 10px 17px;
-    background-color: white;
-    font-size: 18px;
-    border-radius: 10px;
-    margin-right: 15px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    cursor: pointer;
+.modal-img {
+  height: 15rem;
+  border-radius: 50px 0 50px 0;
+}
 
-    &.active {
-      background-color: black;
-      color: #fff;
-    }
+.modal-content {
+  padding: 1rem 1.5rem;
+  p{
+    color:rgb(18, 18, 18);
   }
+  a{
+    display: block;
+    color: rgb(44, 50, 50);
+    text-decoration: underline;
+    margin-bottom: 10px;
+  }
+}
+.close-btn {
+  background: rgb(214, 71, 71);
+  color:#fff;
 }
