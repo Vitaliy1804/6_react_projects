@@ -14,8 +14,7 @@ body {
   box-sizing: border-box;
 }
 main {
-  padding-left: 50px;
-  padding-right: 50px;
+  background: #d3e3f2;
 }
 
 .btn {
@@ -100,75 +99,6 @@ main {
   }
 }
 
-
-.collection {
-  max-width: 470px;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 30px;
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  transition: all 0.15s ease-in-out;
-
-  h4 {
-    margin: 0;
-    margin-top: 15px;
-    font-size: 20px;
-    font-family: 'Merriweather', serif;
-  }
-
-  &:hover {
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-    transform: translateY(-5px);
-  }
-
-  @media (max-width: 1000px) {
-    width: 100%;
-  }
-
-  img {
-    object-fit: cover;
-  }
-
-  &__big {
-    height: 250px;
-    width: 100%;
-    border-radius: 20px;
-    margin-bottom: 15px;
-  }
-
-  &__bottom {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__mini {
-    width: 31%;
-    height: 80px;
-    border-radius: 20px;
-  }
-}
-
-.top {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.search-input {
-  font-size: 16px;
-  width: 250px;
-  height: 50px;
-  padding: 0 15px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  outline: none;
-  transition: all 0.15s ease-in-out;
-
-  &:focus {
-    border: 1px solid rgba(0, 0, 0, 0.4);
-  }
-}
 footer h5 {
   max-width: 250px;
 }
@@ -215,4 +145,41 @@ footer h5 {
 .close-btn {
   background: rgb(214, 71, 71);
   color:#fff;
+}
+
+/* Favorites */
+.favorites {
+  background: black;
+  color:#fff;
+  padding: 1rem 0;
+     &-content {
+      padding-right: 40px;
+      padding-left: 40px;
+  }
+  &-container {
+    display: flex;
+    gap:0.5rem;
+    flex-wrap: wrap;
+  }
+  &-item {
+    text-align: center;
+  }
+  &-img {
+    width: 60px;
+    border-radius: 50%;
+    border: 5px solid white;
+    cursor: pointer;
+  }
+}
+.remove-btn {
+  margin-top: 0.25rem;
+  background: transparent;
+  color: #fff;
+  border: transparent;
+  cursor: pointer;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  font-size: 0.5rem;
+}
+.remove-btn:hover {
+  color:pink;
 }

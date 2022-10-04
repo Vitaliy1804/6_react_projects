@@ -1,7 +1,7 @@
 import { useGlobalContext } from '../context';
 
 const Meals = () => {
-  const {loading, meals, selectMeal} =useGlobalContext()  
+  const {loading, meals, selectMeal, addToFavorites} =useGlobalContext()  
 
   if (loading) {
     return  (
@@ -30,7 +30,12 @@ const Meals = () => {
             />
             <footer>
               <h5>{title}</h5>
-              <button className='like-btn'>click me</button>
+              <button 
+              className='like-btn'
+              onClick={()=>addToFavorites(idMeal)}
+              >
+                like me!
+                </button>
             </footer>
 
           </article>
