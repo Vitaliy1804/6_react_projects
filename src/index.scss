@@ -158,17 +158,21 @@ footer h5 {
   }
   &-container {
     display: flex;
-    gap:0.5rem;
+    gap:1.5rem;
     flex-wrap: wrap;
   }
-  &-item {
-    text-align: center;
-  }
+  
   &-img {
-    width: 60px;
+    width: 90px;
     border-radius: 50%;
     border: 5px solid white;
     cursor: pointer;
+  }
+
+&-item {
+    display: flex;
+    flex-direction: column;
+    
   }
 }
 .remove-btn {
@@ -181,5 +185,5 @@ footer h5 {
   font-size: 0.5rem;
 }
 .remove-btn:hover {
-  color:pink;
+  color:rgb(233, 105, 126);
 }
